@@ -1,0 +1,115 @@
+{
+	"messengers": [
+		{
+			"name": "Whatsapp",
+			"id": "whatsapp",
+			"basePrice": 10
+		},
+		{
+			"name": "Viber",
+			"id": "viber",
+			"basePrice": 10
+		},
+		{
+			"name": "Tam Tam",
+			"id": "tamTam",
+			"basePrice": 10
+		},
+		{
+			"name": "Telegram",
+			"id": "telegram",
+			"basePrice": 20
+		},
+		{
+			"name": "Discord",
+			"id": "discord",
+			"basePrice": 10
+		}
+	],
+	"moreServices": [
+			{
+				"name": "Video Service",
+				"id": "videoService",
+				"basePrice": 100
+			}
+	],
+	"social": [
+		{
+			"name": "VK",
+			"id": "vk",
+			"basePrice": 10
+		},
+		{
+			"name": "OK",
+			"id": "ok",
+			"basePrice": 10
+		},
+		{
+			"name": "TikTok",
+			"id": "tiktok",
+			"basePrice": 10
+		}
+	],
+	"internet": [
+		{
+			"count": 5,
+			"basePrice": 200
+		},
+		{
+			"count": 10,
+			"basePrice": 300
+		},
+		{
+			"count": 15,
+			"basePrice": 350
+		},
+		{
+			"count": 25,
+			"basePrice": 400
+		}
+	],
+	"messages": [
+		{
+			"count": 0,
+			"basePrice": 0
+		},
+		{
+			"count": 50,
+			"basePrice": 100
+		},
+		{
+			"count": 100,
+			"basePrice": 150
+		},
+		{
+			"count": 150,
+			"basePrice": 180
+		}
+	],
+	"minutes": [
+		{
+			"count": 100,
+			"basePrice": 100
+		},
+		{
+			"count": 200,
+			"basePrice": 200
+		},
+		{
+			"count": 300,
+			"basePrice": 300
+		},
+		{
+			"count": 400,
+			"basePrice": 350
+		},
+		{
+			"count": 500,
+			"basePrice": 400
+		},
+		{
+			"count": 600,
+			"basePrice": 450
+		}
+	]
+}

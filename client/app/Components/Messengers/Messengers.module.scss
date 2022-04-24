@@ -1,0 +1,32 @@
+.Messengers {
+	> h4 {
+		display: flex;
+		align-items: center;
+		grid-column-gap: 10px;
+	}
+	> ul {
+		padding: 0;
+		display: flex;
+		grid-column-gap: 18px;
+		.MessengerItem {
+			display: flex;
+			flex-direction: column;
+			grid-row-gap: 18px;
+			filter: grayscale(0.8);
+			> svg,
+			> img {
+				border-radius: 50%;
+			}
+
+			&__active {
+				display: flex;
+				flex-direction: column;
+				grid-row-gap: 18px;
+				> svg,
+				> img {
+					border-radius: 50%;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,45 @@
+.MuiSlider {
+	&-mark {
+		display: none;
+	}
+	&-rail {
+		padding: 0.5px;
+		color: unset;
+		background-color: #e8e8ed;
+	}
+	&-track {
+		background-color: black;
+		padding: 0.5px;
+		border-color: black;
+	}
+	&-thumb {
+		background: black;
+		position: relative;
+		width: 32px;
+		height: 32px;
+
+		&:hover {
+			box-shadow: unset;
+		}
+		&::before {
+			position: absolute;
+			content: '<';
+			color: white;
+			top: 4.9px;
+			left: 7px;
+			width: unset;
+			height: unset;
+			box-shadow: unset;
+		}
+		&::after {
+			position: absolute;
+			content: '>';
+			width: unset;
+			box-shadow: unset;
+			height: unset;
+			color: white;
+			top: 15px;
+			right: 17px;
+		}
+	}
+}

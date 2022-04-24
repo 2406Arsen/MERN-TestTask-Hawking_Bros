@@ -1,0 +1,31 @@
+.MoreServices {
+	> h4 {
+		display: flex;
+		align-items: center;
+		grid-column-gap: 10px;
+	}
+	> ul {
+		padding: 0;
+		.MoreServiceItem {
+			list-style-type: none;
+			display: flex;
+			flex-direction: column;
+			grid-row-gap: 18px;
+			filter: grayscale(0.9);
+			> img,
+			> svg {
+				border-radius: 50%;
+			}
+
+			&__active {
+				list-style-type: none;
+				display: flex;
+				flex-direction: column;
+				grid-row-gap: 18px;
+				> img {
+					border-radius: 50%;
+				}
+			}
+		}
+	}
+}
