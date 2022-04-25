@@ -1,11 +1,25 @@
-import { FC, memo } from 'react'
+import { FC, memo, useEffect } from 'react'
 import classes from './Minute.module.scss'
 import { Slider } from '@mui/material'
 import { setSelectedMinute } from '../../Redux/features/main/mainSlice'
-import { useDispatch } from 'react-redux'
+import { shallowEqual, useDispatch } from 'react-redux'
+import { AppDispatch } from '../../Redux/store'
+import { useAppSelector } from '../../Redux/hook'
+import { fetchOneMinute } from '../../Redux/features/main/functions'
 
 const Minute: FC = memo(() => {
-	const dispatch = useDispatch()
+	const dispatch: AppDispatch = useDispatch()
+	const { selectedMinute } = useAppSelector(
+		({ main }) => ({
+			selectedMinute: main.data.selectedMinute,
+		}),
+		shallowEqual,
+	)
+
+	useEffect(() => {
+		dispatch(fetchOneMinute(selectedMinute))
+	}, [selectedMinute])
+
 	const marks = [
 		{
 			value: 0,

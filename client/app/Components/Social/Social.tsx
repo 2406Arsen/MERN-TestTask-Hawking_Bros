@@ -4,19 +4,34 @@ import OkIcon from '../../Assets/icons/ok.svg'
 import VkIcon from '../../Assets/icons/vk.svg'
 import TikTokIcon from '../../Assets/icons/tiktok.svg'
 import { shallowEqual, useDispatch } from 'react-redux'
-import { memo, MouseEvent } from 'react'
-import { setSelectedSocialItems } from '../../Redux/features/main/mainSlice'
+import { memo, useEffect, useState } from 'react'
+import { setCurrentSocialPrice } from '../../Redux/features/main/mainSlice'
 import { useAppSelector } from '../../Redux/hook'
+import { AppDispatch } from '../../Redux/store'
+import { fetchOneSocial } from '../../Redux/features/main/functions'
 
 const Social = memo(() => {
-	const dispatch = useDispatch()
-	const handleClick = (e: MouseEvent<HTMLLIElement>) => {
-		dispatch(setSelectedSocialItems(e.currentTarget.id))
-	}
+	const dispatch: AppDispatch = useDispatch()
+
+	const [selectedSocial, setSelectedSocial] = useState<string[]>([])
+
 	const { selectedSocialItems } = useAppSelector(
 		({ main }) => ({ selectedSocialItems: main.data.selectedSocialItems }),
 		shallowEqual,
 	)
+
+	const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
+		selectedSocial.includes(e.currentTarget.id)
+			? setSelectedSocial(selectedSocial.filter((name) => name !== e.currentTarget.id))
+			: setSelectedSocial((prev) => [...prev, e?.currentTarget?.id])
+
+		dispatch(fetchOneSocial(e.currentTarget.id))
+	}
+
+	useEffect(() => {
+		dispatch(setCurrentSocialPrice())
+	}, [selectedSocialItems])
+	
 	return (
 		<section className={classes.Social}>
 			<h4>
@@ -28,7 +43,7 @@ const Social = memo(() => {
 					id='vk'
 					onClick={handleClick}
 					className={
-						selectedSocialItems.includes('vk')
+						selectedSocial.includes('vk')
 							? classes.SocialItem__active
 							: classes.SocialItem
 					}>
@@ -39,7 +54,7 @@ const Social = memo(() => {
 					id='ok'
 					onClick={handleClick}
 					className={
-						selectedSocialItems.includes('ok')
+						selectedSocial.includes('ok')
 							? classes.SocialItem__active
 							: classes.SocialItem
 					}>
@@ -50,7 +65,7 @@ const Social = memo(() => {
 					id='tiktok'
 					onClick={handleClick}
 					className={
-						selectedSocialItems.includes('tiktok')
+						selectedSocial.includes('tiktok')
 							? classes.SocialItem__active
 							: classes.SocialItem
 					}>

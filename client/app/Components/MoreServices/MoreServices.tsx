@@ -2,17 +2,34 @@ import classes from './MoreServices.module.scss'
 import InfoIcon from '@mui/icons-material/Info'
 import { useAppSelector } from '../../Redux/hook'
 import { shallowEqual, useDispatch } from 'react-redux'
-import { setSelectedMoreServices } from '../../Redux/features/main/mainSlice'
-import { memo, MouseEvent } from 'react'
+import { setCurrentMoreServicesPrice } from '../../Redux/features/main/mainSlice'
+import { memo, useEffect, useState } from 'react'
+import { fetchOneMoreService } from '../../Redux/features/main/functions'
+import { AppDispatch } from '../../Redux/store'
+
 const MoreServices = memo(() => {
-	const dispatch = useDispatch()
+	const dispatch: AppDispatch = useDispatch()
+	const [selectedMoreServicesNames, setSelectedMoreServicesNames] = useState<string[]>([])
+
 	const { selectedMoreServices } = useAppSelector(
 		({ main }) => ({ selectedMoreServices: main.data.selectedMoreServices }),
 		shallowEqual,
 	)
-	const handleClick = (e: MouseEvent<HTMLLIElement>) => {
-		dispatch(setSelectedMoreServices(e.currentTarget.id))
+
+	const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
+		selectedMoreServicesNames.includes(e.currentTarget.id)
+			? setSelectedMoreServicesNames(
+					selectedMoreServicesNames.filter((name) => name !== e.currentTarget.id),
+			  )
+			: setSelectedMoreServicesNames((prev) => [...prev, e?.currentTarget?.id])
+
+		dispatch(fetchOneMoreService(e.currentTarget.id))
 	}
+
+	useEffect(() => {
+		dispatch(setCurrentMoreServicesPrice())
+	}, [selectedMoreServices])
+
 	return (
 		<section className={classes.MoreServices}>
 			<h4>
@@ -23,7 +40,7 @@ const MoreServices = memo(() => {
 				<li
 					id='videoService'
 					className={
-						selectedMoreServices.includes('videoService')
+						selectedMoreServicesNames.includes('videoService')
 							? classes.MoreServiceItem__active
 							: classes.MoreServiceItem
 					}

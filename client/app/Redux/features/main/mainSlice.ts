@@ -8,9 +8,17 @@ const initialState: IMainInitialState = {
 		selectedMessengers: [],
 		selectedMoreServices: [],
 		selectedMinute: 200,
-		selectedInternet: 5,
+		selectedInternet: 15,
 		selectedMessages: 50,
 		finalPrice: 0,
+		currentPrices: {
+			internet: 0,
+			message: 0,
+			messengers: 0,
+			minute: 0,
+			moreServices: 0,
+			social: 0,
+		},
 	},
 	error: {},
 }
@@ -18,30 +26,37 @@ const mainSlice = createSlice({
 	name: 'main',
 	initialState,
 	reducers: {
-		setLoading: (state, { payload }: PayloadAction<boolean>) => {
-			state.loading = payload
-		},
-		setSelectedSocialItems: (state, { payload }: PayloadAction<string>) => {
-			state.data.selectedSocialItems.includes(payload)
-				? (state.data.selectedSocialItems = state.data.selectedSocialItems.filter(
-						(selectedSocialItem) => selectedSocialItem !== payload,
-				  ))
-				: state.data.selectedSocialItems.push(payload)
-		},
-		setSelectedMessengers: (state, { payload }: PayloadAction<string>) => {
-			state.data.selectedMessengers.includes(payload)
+		setSelectedMessengers: (
+			state,
+			{ payload }: PayloadAction<{ itemId: string; price: number }>,
+		) => {
+			!!state.data.selectedMessengers.find(({ itemId }) => payload.itemId === itemId)
 				? (state.data.selectedMessengers = state.data.selectedMessengers.filter(
-						(selectedSocialItem) => selectedSocialItem !== payload,
+						({ itemId }) => itemId !== payload.itemId,
 				  ))
-				: state.data.selectedMessengers.push(payload)
+				: (state.data.selectedMessengers = [...state.data.selectedMessengers, payload])
 		},
-		setSelectedMoreServices: (state, { payload }: PayloadAction<string>) => {
-			state.data.selectedMoreServices.includes(payload)
+		setSelectedSocialItems: (
+			state,
+			{ payload }: PayloadAction<{ itemId: string; price: number }>,
+		) => {
+			!!state.data.selectedSocialItems.find(({ itemId }) => payload.itemId === itemId)
+				? (state.data.selectedSocialItems = state.data.selectedSocialItems.filter(
+						({ itemId }) => itemId !== payload.itemId,
+				  ))
+				: (state.data.selectedSocialItems = [...state.data.selectedSocialItems, payload])
+		},
+		setSelectedMoreServices: (
+			state,
+			{ payload }: PayloadAction<{ itemId: string; price: number }>,
+		) => {
+			!!state.data.selectedMoreServices.find(({ itemId }) => payload.itemId === itemId)
 				? (state.data.selectedMoreServices = state.data.selectedMoreServices.filter(
-						(selectedSocialItem) => selectedSocialItem !== payload,
+						({ itemId }) => itemId !== payload.itemId,
 				  ))
-				: state.data.selectedMoreServices.push(payload)
+				: (state.data.selectedMoreServices = [...state.data.selectedMoreServices, payload])
 		},
+
 		setSelectedMinute: (state, { payload }: PayloadAction<number>) => {
 			state.data.selectedMinute = payload
 		},
@@ -51,20 +66,53 @@ const mainSlice = createSlice({
 		setSelectedMessages: (state, { payload }: PayloadAction<number>) => {
 			state.data.selectedMessages = payload
 		},
+
+		setCurrentMessagePrice: (state, { payload }: PayloadAction<number>) => {
+			state.data.currentPrices.message = payload
+		},
+		setCurrentInternetPrice: (state, { payload }: PayloadAction<number>) => {
+			state.data.currentPrices.internet = payload
+		},
+		setCurrentMinutePrice: (state, { payload }: PayloadAction<number>) => {
+			state.data.currentPrices.minute = payload
+		},
+		setCurrentMessengersPrice: (state) => {
+			state.data.currentPrices.messengers = state.data.selectedMessengers.reduce(
+				(aggr, value) => aggr + value.price,
+				0,
+			)
+		},
+		setCurrentSocialPrice: (state) => {
+			state.data.currentPrices.social = state.data.selectedSocialItems.reduce(
+				(aggr, value) => aggr + value.price,
+				0,
+			)
+		},
+		setCurrentMoreServicesPrice: (state) => {
+			state.data.currentPrices.moreServices = state.data.selectedMoreServices.reduce(
+				(aggr, value) => aggr + value.price,
+				0,
+			)
+		},
 		changePrice: (state, { payload }: PayloadAction<number>) => {
-			state.data.finalPrice += payload
+			state.data.finalPrice = payload
 		},
 	},
 })
 
 export const {
-	setLoading,
 	setSelectedSocialItems,
 	setSelectedMessengers,
 	setSelectedMoreServices,
 	setSelectedMinute,
 	setSelectedInternet,
 	setSelectedMessages,
+	setCurrentMessagePrice,
+	setCurrentInternetPrice,
+	setCurrentMinutePrice,
+	setCurrentMessengersPrice,
+	setCurrentMoreServicesPrice,
+	setCurrentSocialPrice,
 	changePrice,
 } = mainSlice.actions
 export const mainSelector = (state: IMainInitialState): IMainInitialState => state

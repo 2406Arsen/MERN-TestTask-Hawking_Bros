@@ -16,7 +16,8 @@ const Message = memo(() => {
 		}),
 		shallowEqual,
 	)
-	useEffect(() => {		dispatch(fetchOneMessage(selectedMessageCount))
+	useEffect(() => {
+		dispatch(fetchOneMessage(selectedMessageCount))
 	}, [selectedMessageCount])
 
 	const marks = [

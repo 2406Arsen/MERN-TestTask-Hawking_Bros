@@ -1,4 +1,3 @@
-
 import InternetModel from '../Models/InternetModel.js'
 class InternetController {
 	async create(req, res) {

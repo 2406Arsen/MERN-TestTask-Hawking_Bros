@@ -2,16 +2,23 @@
 	padding: 0 2rem;
 	display: flex;
 	flex-direction: column;
-	grid-row-gap: 20px;
+	grid-row-gap: 10px;
 	max-width: 600px;
 	position: relative;
+	margin-bottom: 80px;
+	margin-left: 10%;
 	h1 {
 		font-size: 38px;
-		line-height: 42px;;
-
+		line-height: 42px;
 		font-weight: 400;
 		line-height: 1.2em;
 		margin: 10px 0 18px;
 		color: #1f2229;
+	}
+}
+@media (max-width: 1024px) {
+	.container {
+		max-width: 800px;
+		margin-left: 2px;
 	}
 }

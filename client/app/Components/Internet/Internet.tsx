@@ -1,11 +1,25 @@
 import classes from './Internet.module.scss'
 import { Slider } from '@mui/material'
-import { memo } from 'react'
-import { useDispatch } from 'react-redux'
+import { memo, useEffect } from 'react'
+import { shallowEqual, useDispatch } from 'react-redux'
 import { setSelectedInternet } from '../../Redux/features/main/mainSlice'
+import { useAppSelector } from '../../Redux/hook'
+import { fetchOneInternet } from '../../Redux/features/main/functions'
+import { AppDispatch } from '../../Redux/store'
 
 const Internet = memo(() => {
-	const dispatch = useDispatch()
+	const dispatch: AppDispatch = useDispatch()
+	const { selectedInternet } = useAppSelector(
+		({ main }) => ({
+			selectedInternet: main.data.selectedInternet,
+		}),
+		shallowEqual,
+	)
+
+	useEffect(() => {
+		dispatch(fetchOneInternet(selectedInternet))
+	}, [selectedInternet])
+
 	const marks = [
 		{
 			value: 0,

@@ -1,4 +1,4 @@
-import type { NextPage, NextPageContext } from 'next'
+import type { NextPage } from 'next'
 import styles from '../styles/Home.module.scss'
 import Internet from '../app/Components/Internet/Internet'
 import Minute from '../app/Components/Minutes/Minute'
@@ -9,19 +9,19 @@ import Message from '../app/Components/Message/Message'
 import Messengers from '../app/Components/Messengers/Messengers'
 import { useAppSelector } from '../app/Redux/hook'
 import { useEffect } from 'react'
-import {
-	getAllInternetData,
-	getAllMessagesData,
-	getAllMessengers,
-	getAllMinutesData,
-	getAllMoreServicesData,
-	getAllSocialData,
-} from '../app/api/api'
+import { AppDispatch } from '../app/Redux/store'
+import { useDispatch } from 'react-redux'
+import { fetchTotalSum } from '../app/Redux/features/main/functions'
 
-const Home: NextPage = ({ propData }: any) => {
+const Home: NextPage = () => {
 	const { data } = useAppSelector(({ main }) => ({
 		data: main.data,
 	}))
+	const dispatch: AppDispatch = useDispatch()
+
+	useEffect(() => {
+		dispatch(fetchTotalSum())
+	}, [data.currentPrices])
 
 	return (
 		<main className={styles.container}>
@@ -38,28 +38,3 @@ const Home: NextPage = ({ propData }: any) => {
 }
 
 export default Home
-
-export async function getServerSideProps() {
-	try {
-		let data = {}
-		const messengers = await getAllMessengers()
-		const internet = await getAllInternetData()
-		const minutes = await getAllMinutesData()
-		const messages = await getAllMessagesData()
-		const moreServices = await getAllMoreServicesData()
-		const social = await getAllSocialData()
-
-		data = { ...data, messengers, minutes, internet, messages, moreServices, social }
-		return {
-			props: {
-				propData: JSON.parse(JSON.stringify(data)),
-			},
-		}
-	} catch (error) {
-		return {
-			props: {
-				propData: {},
-			},
-		}
-	}
-}

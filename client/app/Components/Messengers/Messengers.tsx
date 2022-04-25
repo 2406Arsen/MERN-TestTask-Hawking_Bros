@@ -6,19 +6,34 @@ import TelegramIcon from '../../Assets/icons/telegram.svg'
 import DiscordIcon from '../../Assets/icons/discord.svg'
 import { useAppSelector } from '../../Redux/hook'
 import { shallowEqual, useDispatch } from 'react-redux'
-import { setSelectedMessengers } from '../../Redux/features/main/mainSlice'
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
+import { AppDispatch } from '../../Redux/store'
+import { fetchOneMessenger } from '../../Redux/features/main/functions'
+import { setCurrentMessengersPrice } from '../../Redux/features/main/mainSlice'
 
 const Messengers = memo(() => {
-	const dispatch = useDispatch()
-
-	const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
-		dispatch(setSelectedMessengers(e.currentTarget.id))
-	}
+	const dispatch: AppDispatch = useDispatch()
+	
+	const [selectedMessengerNames, setSelectedMessengerNames] = useState<string[]>([])
+	
 	const { selectedMessengers } = useAppSelector(
 		({ main }) => ({ selectedMessengers: main.data.selectedMessengers }),
 		shallowEqual,
 	)
+	useEffect(() => {
+		dispatch(setCurrentMessengersPrice())
+	}, [selectedMessengers])
+	
+	const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
+		selectedMessengerNames.includes(e.currentTarget.id)
+			? setSelectedMessengerNames(
+					selectedMessengerNames.filter((name) => name !== e.currentTarget.id),
+			  )
+			: setSelectedMessengerNames((prev) => [...prev, e?.currentTarget?.id])
+
+		dispatch(fetchOneMessenger(e.currentTarget.id))
+	}
+
 	return (
 		<section className={classes.Messengers}>
 			<h4>
@@ -30,7 +45,7 @@ const Messengers = memo(() => {
 					id='whatsapp'
 					onClick={handleClick}
 					className={
-						selectedMessengers.includes('whatsapp')
+						selectedMessengerNames.includes('whatsapp')
 							? classes.MessengerItem__active
 							: classes.MessengerItem
 					}>
@@ -41,7 +56,7 @@ const Messengers = memo(() => {
 					id='viber'
 					onClick={handleClick}
 					className={
-						selectedMessengers.includes('viber')
+						selectedMessengerNames.includes('viber')
 							? classes.MessengerItem__active
 							: classes.MessengerItem
 					}>
@@ -52,7 +67,7 @@ const Messengers = memo(() => {
 					id='tamTam'
 					onClick={handleClick}
 					className={
-						selectedMessengers.includes('tamTam')
+						selectedMessengerNames.includes('tamTam')
 							? classes.MessengerItem__active
 							: classes.MessengerItem
 					}>
@@ -68,7 +83,7 @@ const Messengers = memo(() => {
 					id='telegram'
 					onClick={handleClick}
 					className={
-						selectedMessengers.includes('telegram')
+						selectedMessengerNames.includes('telegram')
 							? classes.MessengerItem__active
 							: classes.MessengerItem
 					}>
@@ -79,7 +94,7 @@ const Messengers = memo(() => {
 					id='discord'
 					onClick={handleClick}
 					className={
-						selectedMessengers.includes('discord')
+						selectedMessengerNames.includes('discord')
 							? classes.MessengerItem__active
 							: classes.MessengerItem
 					}>
