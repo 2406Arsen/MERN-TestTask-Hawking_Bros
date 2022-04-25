@@ -15,8 +15,11 @@ const Social = memo(() => {
 
 	const [selectedSocial, setSelectedSocial] = useState<string[]>([])
 
-	const { selectedSocialItems } = useAppSelector(
-		({ main }) => ({ selectedSocialItems: main.data.selectedSocialItems }),
+	const { selectedSocialItems, selectedInternet } = useAppSelector(
+		({ main }) => ({
+			selectedSocialItems: main.data.selectedSocialItems,
+			selectedInternet: main.data.selectedInternet,
+		}),
 		shallowEqual,
 	)
 
@@ -31,7 +34,7 @@ const Social = memo(() => {
 	useEffect(() => {
 		dispatch(setCurrentSocialPrice())
 	}, [selectedSocialItems])
-	
+
 	return (
 		<section className={classes.Social}>
 			<h4>
@@ -41,9 +44,9 @@ const Social = memo(() => {
 			<ul>
 				<li
 					id='vk'
-					onClick={handleClick}
+					onClick={selectedInternet <= 10 ? handleClick : undefined}
 					className={
-						selectedSocial.includes('vk')
+						selectedInternet > 10 || selectedSocial.includes('vk')
 							? classes.SocialItem__active
 							: classes.SocialItem
 					}>
@@ -52,9 +55,9 @@ const Social = memo(() => {
 				</li>
 				<li
 					id='ok'
-					onClick={handleClick}
+					onClick={selectedInternet <= 10 ? handleClick : undefined}
 					className={
-						selectedSocial.includes('ok')
+						selectedInternet > 10 || selectedSocial.includes('ok')
 							? classes.SocialItem__active
 							: classes.SocialItem
 					}>
@@ -63,9 +66,9 @@ const Social = memo(() => {
 				</li>
 				<li
 					id='tiktok'
-					onClick={handleClick}
+					onClick={selectedInternet <= 10 ? handleClick : undefined}
 					className={
-						selectedSocial.includes('tiktok')
+						selectedInternet > 10 || selectedSocial.includes('tiktok')
 							? classes.SocialItem__active
 							: classes.SocialItem
 					}>

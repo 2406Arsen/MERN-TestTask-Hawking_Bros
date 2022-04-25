@@ -13,17 +13,20 @@ import { setCurrentMessengersPrice } from '../../Redux/features/main/mainSlice'
 
 const Messengers = memo(() => {
 	const dispatch: AppDispatch = useDispatch()
-	
+
 	const [selectedMessengerNames, setSelectedMessengerNames] = useState<string[]>([])
-	
-	const { selectedMessengers } = useAppSelector(
-		({ main }) => ({ selectedMessengers: main.data.selectedMessengers }),
+
+	const { selectedMessengers, selectedInternet } = useAppSelector(
+		({ main }) => ({
+			selectedMessengers: main.data.selectedMessengers,
+			selectedInternet: main.data.selectedInternet,
+		}),
 		shallowEqual,
 	)
 	useEffect(() => {
 		dispatch(setCurrentMessengersPrice())
 	}, [selectedMessengers])
-	
+
 	const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
 		selectedMessengerNames.includes(e.currentTarget.id)
 			? setSelectedMessengerNames(
@@ -43,9 +46,9 @@ const Messengers = memo(() => {
 			<ul>
 				<li
 					id='whatsapp'
-					onClick={handleClick}
+					onClick={selectedInternet <= 10 ? handleClick : undefined}
 					className={
-						selectedMessengerNames.includes('whatsapp')
+						selectedInternet > 10 || selectedMessengerNames.includes('whatsapp')
 							? classes.MessengerItem__active
 							: classes.MessengerItem
 					}>
@@ -54,9 +57,9 @@ const Messengers = memo(() => {
 				</li>
 				<li
 					id='viber'
-					onClick={handleClick}
+					onClick={selectedInternet <= 10 ? handleClick : undefined}
 					className={
-						selectedMessengerNames.includes('viber')
+						selectedInternet > 10 || selectedMessengerNames.includes('viber')
 							? classes.MessengerItem__active
 							: classes.MessengerItem
 					}>
@@ -65,9 +68,9 @@ const Messengers = memo(() => {
 				</li>
 				<li
 					id='tamTam'
-					onClick={handleClick}
+					onClick={selectedInternet <= 10 ? handleClick : undefined}
 					className={
-						selectedMessengerNames.includes('tamTam')
+						selectedInternet > 10 || selectedMessengerNames.includes('tamTam')
 							? classes.MessengerItem__active
 							: classes.MessengerItem
 					}>
@@ -81,9 +84,9 @@ const Messengers = memo(() => {
 				</li>
 				<li
 					id='telegram'
-					onClick={handleClick}
+					onClick={selectedInternet <= 10 ? handleClick : undefined}
 					className={
-						selectedMessengerNames.includes('telegram')
+						selectedInternet > 10 || selectedMessengerNames.includes('telegram')
 							? classes.MessengerItem__active
 							: classes.MessengerItem
 					}>
@@ -92,9 +95,9 @@ const Messengers = memo(() => {
 				</li>
 				<li
 					id='discord'
-					onClick={handleClick}
+					onClick={selectedInternet <= 10 ? handleClick : undefined}
 					className={
-						selectedMessengerNames.includes('discord')
+						selectedInternet > 10 || selectedMessengerNames.includes('discord')
 							? classes.MessengerItem__active
 							: classes.MessengerItem
 					}>
