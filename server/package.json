@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon  --experimental-modules --es-module-specifier-resolution=node index.js"
+    "dev": "nodemon  --experimental-modules --es-module-specifier-resolution=node index.js",
+    "start": "concurrently \"./index.js\" \"../client/pages/_app.tsx \""
   },
   "keywords": [],
   "author": "",
