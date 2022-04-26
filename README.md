@@ -4,9 +4,9 @@
 
 ======= M E R N ========
 
-Run Client --> ~/MERN-TestTask-Hawking_Bros/client --> yarn dev or npm run dev
+Run Client --> ~/MERN-TestTask-Hawking_Bros/client --> npm -i or yarn --> yarn dev or npm run dev
 
-Run Server --> ~/MERN-TestTask-Hawking_Bros/server --> yarn dev or npm run dev
+Run Server --> ~/MERN-TestTask-Hawking_Bros/server --> npm -i or yarn --> yarn dev or npm run dev
 
 
 =============================================================================
