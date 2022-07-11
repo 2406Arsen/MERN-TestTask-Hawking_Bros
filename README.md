@@ -10,6 +10,7 @@ Run Server --> ~/MERN-TestTask-Hawking_Bros/server --> npm -i or yarn --> yarn d
 
 
 =============================================================================
+
 CLIENT -->  Next.js, Typescript, Redux (Toolkit), SCSS, MaterialUI
 
 SERVER --> NodeJS (Express), MongoDB
